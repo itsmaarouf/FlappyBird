@@ -8,7 +8,5 @@ public class FlappyBird {
         Controller controller = new Controller(game);
         Tui tui = new Tui(controller);
         tui.run();
-
-
     }
 }

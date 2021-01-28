@@ -5,6 +5,16 @@ public class Game {
     private Tubes[] tubes;
     private int height = 10, width = 30;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     public Game() {
         this.tubes = new Tubes[10];
         this.tubes[0] = new Tubes(5, 3, 10, 5, false);
@@ -61,13 +71,13 @@ public class Game {
                 //Building Tubes Borders
                 int tubeIndex = getTubeIndex(x, y);
                 if (tubeIndex >-1) {
-                    result += oneBorder;
+                    result +=  ANSI_RED + oneBorder + ANSI_RESET;
                 }else if (x == this.bird.getPositionX() && y == this.bird.getPositionY() ) {
                     // bird
-                    result += "O";
+                    result += ANSI_YELLOW +"O"+ ANSI_RESET;
                 }else {
                     // space
-                    result += onePixelX;
+                    result += onePixelX ;
                 }
             }
             result += oneBorder+onePixelY;

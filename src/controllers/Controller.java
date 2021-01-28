@@ -1,10 +1,12 @@
 package controllers;
 import models.modelsImpl.Game;
 import util.observer.Observable;
+import views.Tui;
 
 
 public class Controller extends Observable{
     Game game;
+    Tui tui;
 
 
     public Controller(Game game) {
@@ -28,6 +30,14 @@ public class Controller extends Observable{
             this.game.getTubes()[i].setPositionX(this.game.getTubes()[i].getPositionX() - 1);
         }
         //this.game.updateTubes();
+    }
+    public boolean gameOverTest() {
+        for (int i = 0; i < this.game.getTubes().length; i++) {
+        if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()) {
+            return !this.tui.isGameOver();
+        }
+        }
+        return false;
     }
 }
 
