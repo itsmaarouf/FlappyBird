@@ -39,6 +39,7 @@ public class Tui implements IObserver {
 
     public void scanInput(){
         Scanner myObj = new Scanner(System.in);
+
             String  a = myObj.next();
             System.out.println(a);
             if (a == "a") {
