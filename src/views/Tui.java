@@ -1,14 +1,14 @@
 package views;
 import controllers.Controller;
+import models.modelsImpl.Game;
 import util.observer.IObserver;
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Tui implements IObserver {
     Controller controller;
     boolean gameOver=false;
-
+    Scanner myObj = new Scanner(System.in);
     //Keyboard keyboard =  Keyboard.etInstance();
 
     public Tui(Controller controller) {
@@ -33,30 +33,21 @@ public class Tui implements IObserver {
             }
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
-            //this.controller.gameOverTest();
+            gameOver = this.controller.gameOverTest();
+            scanInput();
         }
     }
 
     public void scanInput(){
-        Scanner myObj = new Scanner(System.in);
-
-            String  a = myObj.next();
-            System.out.println(a);
+        String  a = myObj.next();
+        System.out.println(a);
             if (a == "a") {
                 controller.goUp();
+            }else {
+                printGame();
             }
-
-        myObj.close();
     }
-
-/*    public void keyReleased(KeyEvent e)
-    {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
-        {
-            controller.goUp();
-        }
-    }*/
-
+    
     private void printGame() {
         System.out.println(this.controller.getGame());
     }

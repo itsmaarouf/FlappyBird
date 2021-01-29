@@ -33,9 +33,9 @@ public class Controller extends Observable{
     }
     public boolean gameOverTest() {
         for (int i = 0; i < this.game.getTubes().length; i++) {
-        if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()) {
-            return !this.tui.isGameOver();
-        }
+            if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()) {
+                return true;
+            }
         }
         return false;
     }
