@@ -37,7 +37,6 @@ public class Tui implements IObserver {
             scanInput();
         }
     }
-
     public void scanInput(){
         String  a = myObj.next();
         System.out.println(a);
@@ -47,7 +46,6 @@ public class Tui implements IObserver {
                 printGame();
             }
     }
-    
     private void printGame() {
         System.out.println(this.controller.getGame());
     }
