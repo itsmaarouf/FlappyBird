@@ -1,5 +1,6 @@
 import controllers.Controller;
 import models.modelsImpl.Game;
+import views.Gui;
 import views.Tui;
 
 public class FlappyBird {
@@ -7,6 +8,7 @@ public class FlappyBird {
        Game game = new Game();
         Controller controller = new Controller(game);
         Tui tui = new Tui(controller);
+        Gui gui = new Gui(controller);
         tui.run();
     }
 }

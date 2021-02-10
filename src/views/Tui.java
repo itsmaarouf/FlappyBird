@@ -1,15 +1,12 @@
 package views;
 import controllers.Controller;
-import models.modelsImpl.Game;
 import util.observer.IObserver;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
-public class Tui implements IObserver {
+public class Tui implements IObserver { 
     Controller controller;
     boolean gameOver=false;
     Scanner myObj = new Scanner(System.in);
-    //Keyboard keyboard =  Keyboard.etInstance();
 
     public Tui(Controller controller) {
         this.controller = controller;
@@ -26,13 +23,9 @@ public class Tui implements IObserver {
     public void run() {
         while(!gameOver) {
             printGame();
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
+            this.controller.gameScore();
             gameOver = this.controller.gameOverTest();
             scanInput();
         }
@@ -40,13 +33,14 @@ public class Tui implements IObserver {
     public void scanInput(){
         String  a = myObj.next();
         System.out.println(a);
-            if (a == "a") {
+            if (a.equals("a")) {
                 controller.goUp();
             }else {
                 printGame();
             }
     }
     private void printGame() {
-        System.out.println(this.controller.getGame());
+        System.out.println(this.controller.getGameSting());
+        System.out.println(this.controller.getStatusMessage());
     }
 }

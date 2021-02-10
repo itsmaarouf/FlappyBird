@@ -6,14 +6,10 @@ public class Game {
     private int height = 10, width = 30;
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
+
+
 
     public Game() {
         this.tubes = new Tubes[10];
@@ -21,14 +17,21 @@ public class Game {
         this.tubes[1] = new Tubes(3, 3, 10, 0, true);
         this.tubes[2] = new Tubes(4, 3, 17, 6, false);
         this.tubes[3] = new Tubes(4, 3, 17, 0, true);
-        this.tubes[4] = new Tubes(7, 3, 24, 3, false);
+        this.tubes[4] = new Tubes(6, 3, 24, 4, false);
         this.tubes[5] = new Tubes(2, 3, 24, 0, true);
-        this.tubes[6] = new Tubes(6, 3, 31, 4, false);
+        this.tubes[6] = new Tubes(5, 3, 31, 6, false);
         this.tubes[7] = new Tubes(3, 3, 31, 0, true);
-        this.tubes[8] = new Tubes(5, 3, 38, 5, false);
+        this.tubes[8] = new Tubes(4, 3, 38, 6, false);
         this.tubes[9] = new Tubes(4, 3, 38, 0, true);
 
         this.bird = new Bird(2,5);
+    }
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     public Tubes[] getTubes() {
@@ -85,11 +88,14 @@ public class Game {
         result += "|------------------------------|";
         return result;
     }
+    public void info(){
+        System.out.print("Position(Y-X) of Bird is : ("+getBird().getPositionY()+"-"+getBird().getPositionX()+")\n");
+    }
 
     public void updateTubes() {
+        System.out.print("Position(Y-X) of first tube is : (" +this.tubes[0].getPositionY()+"-"+this.tubes[0].getPositionX()+")\n");
         int lastPositionX = getLastPositionX();
         for (int i = 0; i <this.tubes.length ; i++) {
-            System.out.print(this.tubes[i].getPositionX() + " ");
             if (this.tubes[i].getPositionX() < -4) {
                 this.tubes[i].setPositionX(lastPositionX + 7);
             }
