@@ -8,10 +8,10 @@ public class Controller extends Observable{
     String statusMessage;
 
 
-    public Controller(Game game) {
-        this.game = game;
-        this.statusMessage = Messages.WELCOME_MESSAGE;
-    }
+        public Controller(Game game) {
+            this.game = game;
+            this.statusMessage = Messages.WELCOME_MESSAGE;
+        }
 
     public String getStatusMessage() {
         return statusMessage;
@@ -23,12 +23,10 @@ public class Controller extends Observable{
 
     public String getGameSting() {
         return this.game.toString() ;
-
     }
 
     public void changeBirdPosition(){
         this.game.getBird().setPositionY(this.game.getBird().getPositionY()+1);
-        this.game.info();
     }
 
     public void goUp() {
@@ -41,6 +39,7 @@ public class Controller extends Observable{
         }
         this.game.updateTubes();
     }
+
     public boolean gameOverTest() {
         for (int i = 0; i < this.game.getTubes().length; i++) {
             if ((this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX())
@@ -52,6 +51,7 @@ public class Controller extends Observable{
         }
         return false;
     }
+
     int Score = 0;
     public void gameScore() {
         for (int i = 0; i < this.game.getTubes().length; i++) {

@@ -3,13 +3,11 @@ package models.modelsImpl;
 public class Game {
     private Bird bird;
     private Tubes[] tubes;
-    private int height = 10, width = 30;
+    private int height = 10, width = 15;
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-
-
+    public static final String ANSI_RESET = "\u001B[0m",
+                                ANSI_RED = "\u001B[31m" ,
+                                ANSI_YELLOW = "\u001B[33m";
 
     public Game() {
         this.tubes = new Tubes[10];
@@ -24,8 +22,17 @@ public class Game {
         this.tubes[8] = new Tubes(4, 3, 38, 6, false);
         this.tubes[9] = new Tubes(4, 3, 38, 0, true);
 
-        this.bird = new Bird(2,5);
+        this.bird = new Bird(2,3);
     }
+
+    public Bird getBird()        {
+        return bird;
+    }
+
+    public Tubes[] getTubes() {
+        return tubes;
+    }
+
     public int getHeight() {
         return height;
     }
@@ -33,15 +40,6 @@ public class Game {
     public int getWidth() {
         return width;
     }
-
-    public Tubes[] getTubes() {
-        return tubes;
-    }
-
-    public Bird getBird() {
-        return bird;
-    }
-
 
     public int getTubeIndex(int x, int y){
         for (int i = 0; i < this.tubes.length; i++) {
@@ -66,7 +64,7 @@ public class Game {
     public String printGame(){
         String result = "", oneBorder = "|", onePixelX = " ", onePixelY = "\n";
 
-        result += "|------------------------------|"+onePixelY;
+        result += "|---------------|"+onePixelY;
         for (int y = 0; y < height; y++) {
             //Building Game Borders
             result += oneBorder;
@@ -85,15 +83,11 @@ public class Game {
             }
             result += oneBorder+onePixelY;
         }
-        result += "|------------------------------|";
+        result += "|---------------|";
         return result;
     }
-    public void info(){
-        System.out.print("Position(Y-X) of Bird is : ("+getBird().getPositionY()+"-"+getBird().getPositionX()+")\n");
-    }
 
-    public void updateTubes() {
-        System.out.print("Position(Y-X) of first tube is : (" +this.tubes[0].getPositionY()+"-"+this.tubes[0].getPositionX()+")\n");
+    public void updateTubes(){
         int lastPositionX = getLastPositionX();
         for (int i = 0; i <this.tubes.length ; i++) {
             if (this.tubes[i].getPositionX() < -4) {
@@ -102,9 +96,10 @@ public class Game {
         }
     }
 
-    private int getLastPositionX() {
+    private int getLastPositionX(){
         int X = 0;
         for (int i = 0; i <this.tubes.length ; i++) {
+
             if (this.tubes[i].getPositionX()>=X) {
                 X = this.tubes[i].getPositionX();
             }

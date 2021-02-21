@@ -25,7 +25,4 @@ public class Bird {
         this.positionX = positionX;
     }
 
-    public int fly() {
-        return positionY+=1;
-    }
 }

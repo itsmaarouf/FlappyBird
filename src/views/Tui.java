@@ -23,11 +23,12 @@ public class Tui implements IObserver {
     public void run() {
         while(!gameOver) {
             printGame();
+            scanInput();
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
             this.controller.gameScore();
             gameOver = this.controller.gameOverTest();
-            scanInput();
+
         }
     }
     public void scanInput(){
