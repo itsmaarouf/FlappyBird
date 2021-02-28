@@ -7,8 +7,7 @@ public class Controller extends Observable{
     Game game;
     String statusMessage;
 
-
-        public Controller(Game game) {
+    public Controller(Game game) {
             this.game = game;
             this.statusMessage = Messages.WELCOME_MESSAGE;
         }
@@ -40,10 +39,25 @@ public class Controller extends Observable{
         this.game.updateTubes();
     }
 
+    public int getTubeIndex(int x, int y){
+        for (int i = 0; i < this.game.getTubes().length; i++) {
+
+            if (x>=this.game.getTubes()[i].getPositionX()
+                    && x<this.game.getTubes()[i].getPositionX() +this.game.getTubes()[i].getWidth()
+                    && y>=this.game.getTubes()[i].getPositionY()
+                    && y<this.game.getTubes()[i].getPositionY()+this.game.getTubes()[i].getHeight()
+
+            ) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public boolean gameOverTest() {
         for (int i = 0; i < this.game.getTubes().length; i++) {
-            if ((this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX())
-            && (this.game.getBird().getPositionY()  == this.game.getTubes()[i].getPositionY()))
+            if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()
+            && this.game.getBird().getPositionY()  == this.game.getTubes()[i].getPositionY())
             {
                 this.statusMessage = Messages.GameOver;
                 return true;

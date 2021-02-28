@@ -9,6 +9,10 @@ public class FlappyBird {
         Controller controller = new Controller(game);
         Tui tui = new Tui(controller);
         Gui gui = new Gui(controller);
+
+        controller.addObserver(gui);
+        controller.addObserver(tui);
+
         tui.run();
     }
 }

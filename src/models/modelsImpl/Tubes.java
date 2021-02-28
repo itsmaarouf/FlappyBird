@@ -7,7 +7,6 @@ public class Tubes {
     private int positionY;
     private boolean reverse;
 
-
     public Tubes(int height, int width, int positionX, int positionY, boolean reverse) {
         this.height = height;
         this.width = width;

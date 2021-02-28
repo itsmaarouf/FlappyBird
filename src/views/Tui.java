@@ -2,6 +2,7 @@ package views;
 import controllers.Controller;
 import util.observer.IObserver;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Tui implements IObserver { 
     Controller controller;
@@ -20,17 +21,24 @@ public class Tui implements IObserver {
     public void update() {
 
     }
+
     public void run() {
         while(!gameOver) {
             printGame();
             scanInput();
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameOver = this.controller.gameOverTest();
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
             this.controller.gameScore();
-            gameOver = this.controller.gameOverTest();
-
         }
+        System.out.println("ggg");
     }
+
     public void scanInput(){
         String  a = myObj.next();
         System.out.println(a);
@@ -40,6 +48,7 @@ public class Tui implements IObserver {
                 printGame();
             }
     }
+
     private void printGame() {
         System.out.println(this.controller.getGameSting());
         System.out.println(this.controller.getStatusMessage());
