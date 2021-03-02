@@ -36,7 +36,7 @@ public class Tui implements IObserver {
             this.controller.changeTubesPositions();
             this.controller.gameScore();
         }
-        System.out.println("ggg");
+        this.controller.gameOverMessage();
     }
 
     public void scanInput(){

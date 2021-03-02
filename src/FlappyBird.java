@@ -14,5 +14,6 @@ public class FlappyBird {
         controller.addObserver(tui);
 
         tui.run();
+        gui.run();
     }
 }

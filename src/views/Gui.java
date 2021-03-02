@@ -7,33 +7,37 @@ import util.observer.IObserver;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
-public class Gui extends JFrame implements IObserver {
+public class Gui extends JFrame implements IObserver, ActionListener {
     Controller controller;
     private JButton[][] GuiTubes;
     private JLabel[][] SPACE;
+    int height;
+    int width;
+    JPanel gridPanel;
+    boolean gameOver=false;
 
     public Gui(Controller controller) {
         this.controller = controller;
-        int height = this.controller.getGame().getHeight();
-        int width = this.controller.getGame().getWidth();
+        height = this.controller.getGame().getHeight();
+        width = this.controller.getGame().getWidth();
 
-        Tubes[] myTubes = this.controller.getGame().getTubes();
+        //Tubes[] myTubes = this.controller.getGame().getTubes();
         this.GuiTubes = new JButton[height][width];
         this.SPACE = new JLabel[height][width];
 
         Container mainContainer = this.getContentPane();
-        mainContainer.setLayout(new BorderLayout(8, 6));
-        //mainContainer.setBackground(Color.YELLOW);
-        //this.getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLACK));
+        //mainContainer.setLayout(new BorderLayout(8, 6));
 
         JPanel TopPanel = new JPanel();
-        //TopPanel.setLayout(new G);
         TopPanel.setBorder(new LineBorder(Color.BLACK, 3));
         TopPanel.setBackground(Color.CYAN);
-        //TopPanel.setLayout(new FlowLayout(5));
 
-        JPanel gridPanel = new JPanel();
+
+        gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(height,width,0,0));
         gridPanel.setBackground(Color.cyan);
 
@@ -46,12 +50,14 @@ public class Gui extends JFrame implements IObserver {
                     SPACE[i][j].setBackground(Color.GREEN);
                     SPACE[i][j].setOpaque(true);
                     gridPanel.add(SPACE[i][j]);
+                    //SPACE[i][j].addActionListener(this);
 
                 }else if (i == this.controller.getGame().getBird().getPositionY()
                         && j == this.controller.getGame().getBird().getPositionX() ) {
 
                     GuiTubes[i][j] = new JButton();
                     gridPanel.add(GuiTubes[i][j]);
+                    GuiTubes[i][j].addActionListener(this);
 
                 }else{
 
@@ -60,6 +66,7 @@ public class Gui extends JFrame implements IObserver {
                     SPACE[i][j].setBackground(Color.cyan);
                     SPACE[i][j].setOpaque(true);
                     gridPanel.add(SPACE[i][j]);
+                    //SPACE[i][j].addActionListener(this);
 
                 }
             }
@@ -77,5 +84,52 @@ public class Gui extends JFrame implements IObserver {
     @Override
     public void update() {
 
+
+    }
+
+    public void run(){
+
+        while(!gameOver) {
+
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    int tubeIndex = controller.getTubeIndex(j,i);
+
+                    if (tubeIndex >-1) {
+                        SPACE[i][j].setBackground(Color.GREEN);
+                        SPACE[i][j].setOpaque(true);
+                    }
+                    /*else if (i == this.controller.getGame().getBird().getPositionY()
+                            && j == this.controller.getGame().getBird().getPositionX() ) {
+
+
+                        gridPanel.add(GuiTubes[i][j]);
+                        GuiTubes[i][j].addActionListener(this);
+
+                    }*/
+                    else{
+                        //SPACE[i][j].setPreferredSize(new Dimension(10, 20));
+                        SPACE[i][j].setBackground(Color.cyan);
+                        SPACE[i][j].setOpaque(true);
+                    }
+                }
+            }
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            gameOver = this.controller.gameOverTest();
+            this.controller.changeBirdPosition();
+            this.controller.changeTubesPositions();
+            this.controller.gameScore();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        controller.goUp();
     }
 }

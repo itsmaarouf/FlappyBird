@@ -59,11 +59,14 @@ public class Controller extends Observable{
             if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()
             && this.game.getBird().getPositionY()  == this.game.getTubes()[i].getPositionY())
             {
-                this.statusMessage = Messages.GameOver;
                 return true;
             }
         }
         return false;
+    }
+
+    public void gameOverMessage(){
+        this.statusMessage = Messages.GameOver;
     }
 
     int Score = 0;
