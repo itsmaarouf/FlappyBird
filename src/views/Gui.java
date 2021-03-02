@@ -1,7 +1,6 @@
 package views;
 
 import controllers.Controller;
-import models.modelsImpl.Tubes;
 import util.observer.IObserver;
 
 import javax.swing.*;
@@ -19,27 +18,35 @@ public class Gui extends JFrame implements IObserver, ActionListener {
     int width;
     JPanel gridPanel;
     boolean gameOver=false;
+    JPanel TopPanel;
+    JPanel BottomPanel;
+    JButton FlyButten;
+    Image myBird;
+    JLabel score;
 
     public Gui(Controller controller) {
         this.controller = controller;
         height = this.controller.getGame().getHeight();
         width = this.controller.getGame().getWidth();
 
-        //Tubes[] myTubes = this.controller.getGame().getTubes();
         this.GuiTubes = new JButton[height][width];
         this.SPACE = new JLabel[height][width];
 
         Container mainContainer = this.getContentPane();
-        //mainContainer.setLayout(new BorderLayout(8, 6));
 
-        JPanel TopPanel = new JPanel();
+
+        TopPanel = new JPanel();
         TopPanel.setBorder(new LineBorder(Color.BLACK, 3));
-        TopPanel.setBackground(Color.CYAN);
-
+        TopPanel.setPreferredSize(new Dimension(300, 400));
 
         gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(height,width,0,0));
-        gridPanel.setBackground(Color.cyan);
+        gridPanel.setPreferredSize(new Dimension(300, 400));
+
+        BottomPanel = new JPanel();
+        BottomPanel.setBorder(new LineBorder(Color.BLACK, 1));
+        BottomPanel.setPreferredSize(new Dimension(300, 50));
+        TopPanel.setBackground(Color.CYAN);
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -47,35 +54,43 @@ public class Gui extends JFrame implements IObserver, ActionListener {
                 if (tubeIndex >-1) {
 
                     SPACE[i][j] = new JLabel();
+                    SPACE[i][j].setPreferredSize(new Dimension(20, 20));
                     SPACE[i][j].setBackground(Color.GREEN);
                     SPACE[i][j].setOpaque(true);
                     gridPanel.add(SPACE[i][j]);
-                    //SPACE[i][j].addActionListener(this);
 
                 }else if (i == this.controller.getGame().getBird().getPositionY()
                         && j == this.controller.getGame().getBird().getPositionX() ) {
 
-                    GuiTubes[i][j] = new JButton();
-                    gridPanel.add(GuiTubes[i][j]);
-                    GuiTubes[i][j].addActionListener(this);
+                    SPACE[i][j] =  new JLabel("O0");
+                    SPACE[i][j].setPreferredSize(new Dimension(20, 20));
+                    gridPanel.add(SPACE[i][j]);
 
                 }else{
 
                     SPACE[i][j] = new JLabel();
-                    SPACE[i][j].setPreferredSize(new Dimension(10, 20));
+                    SPACE[i][j].setPreferredSize(new Dimension(20, 20));
                     SPACE[i][j].setBackground(Color.cyan);
                     SPACE[i][j].setOpaque(true);
                     gridPanel.add(SPACE[i][j]);
-                    //SPACE[i][j].addActionListener(this);
 
                 }
             }
         }
 
-        TopPanel.add(gridPanel);
-        mainContainer.add(TopPanel, BorderLayout.CENTER);
 
-        this.setSize(555, 455);
+
+
+        FlyButten = new JButton("Click to Fly");
+        BottomPanel.add(FlyButten);
+        FlyButten.addActionListener(this);
+
+        TopPanel.add(gridPanel);
+        TopPanel.add(BottomPanel);
+        mainContainer.add(TopPanel, BorderLayout.CENTER);
+        mainContainer.add(BottomPanel, BorderLayout.SOUTH);
+
+        this.setSize(300, 450);
         this.setLocation(100, 200);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -84,39 +99,41 @@ public class Gui extends JFrame implements IObserver, ActionListener {
     @Override
     public void update() {
 
-
     }
 
     public void run(){
 
         while(!gameOver) {
 
+            System.out.println(1);
+
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     int tubeIndex = controller.getTubeIndex(j,i);
-
                     if (tubeIndex >-1) {
+
+                        SPACE[i][j].setText("");
                         SPACE[i][j].setBackground(Color.GREEN);
                         SPACE[i][j].setOpaque(true);
-                    }
-                    /*else if (i == this.controller.getGame().getBird().getPositionY()
+
+                    }else if (i == this.controller.getGame().getBird().getPositionY()
                             && j == this.controller.getGame().getBird().getPositionX() ) {
 
+                        SPACE[i][j].setText("OO");
 
-                        gridPanel.add(GuiTubes[i][j]);
-                        GuiTubes[i][j].addActionListener(this);
+                    }else{
 
-                    }*/
-                    else{
-                        //SPACE[i][j].setPreferredSize(new Dimension(10, 20));
+                        SPACE[i][j].setText("");
                         SPACE[i][j].setBackground(Color.cyan);
                         SPACE[i][j].setOpaque(true);
                     }
                 }
             }
 
+            this.getContentPane().repaint();
+
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(600);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
