@@ -66,7 +66,7 @@ public class Gui extends JFrame implements IObserver, ActionListener {
                 }else if (i == this.controller.getGame().getBird().getPositionY()
                         && j == this.controller.getGame().getBird().getPositionX() ) {
 
-                    SPACE[i][j] =  new JLabel("(O.0)");
+                    SPACE[i][j] =  new JLabel("00");
                     SPACE[i][j].setPreferredSize(new Dimension(20, 20));
                     gridPanel.add(SPACE[i][j]);
 
@@ -99,29 +99,43 @@ public class Gui extends JFrame implements IObserver, ActionListener {
 
     @Override
     public void update() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
 
+                int tubeIndex = controller.getTubeIndex(j,i);
+
+                if (tubeIndex >-1) {
+                    SPACE[i][j].setText("");
+                    SPACE[i][j].setBackground(Color.GREEN);
+                    SPACE[i][j].setOpaque(true);
+                }else if (i == this.controller.getGame().getBird().getPositionY()
+                        && j == this.controller.getGame().getBird().getPositionX() ) {
+                    SPACE[i][j].setText("OO");
+                }else{
+                    SPACE[i][j].setText("");
+                    SPACE[i][j].setBackground(Color.cyan);
+                    SPACE[i][j].setOpaque(true);
+                }
+            }
+        }
+        this.getContentPane().repaint();
     }
 
-    public void run(){
-
+   /* public void run(){
         while(!gameOver) {
-
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    int tubeIndex = controller.getTubeIndex(j,i);
-                    if (tubeIndex >-1) {
 
+                    int tubeIndex = controller.getTubeIndex(j,i);
+
+                    if (tubeIndex >-1) {
                         SPACE[i][j].setText("");
                         SPACE[i][j].setBackground(Color.GREEN);
                         SPACE[i][j].setOpaque(true);
-
                     }else if (i == this.controller.getGame().getBird().getPositionY()
                             && j == this.controller.getGame().getBird().getPositionX() ) {
-
                         SPACE[i][j].setText("OO");
-
                     }else{
-
                         SPACE[i][j].setText("");
                         SPACE[i][j].setBackground(Color.cyan);
                         SPACE[i][j].setOpaque(true);
@@ -131,20 +145,16 @@ public class Gui extends JFrame implements IObserver, ActionListener {
 
             this.getContentPane().repaint();
 
-            try {
+            *//*try {
                 TimeUnit.MILLISECONDS.sleep(600);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
-            this.controller.gameScore();
-            gameOver = this.controller.gameOver();
-
+            gameOver = this.controller.gameOver();*//*
         }
-    }
-
+    }*/
     @Override
     public void actionPerformed(ActionEvent e) {
         controller.goUp();

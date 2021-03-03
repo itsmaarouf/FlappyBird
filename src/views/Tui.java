@@ -22,12 +22,12 @@ public class Tui implements IObserver {
 
     }
 
-    public void run() {
+    /*public void run() {
         while(!gameOver) {
             printGame();
             scanInput();
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(600);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -37,9 +37,9 @@ public class Tui implements IObserver {
             gameOver = this.controller.gameOver();
         }
         this.controller.gameOverMessage();
-    }
+    }*/
 
-    public void scanInput(){
+    /*public void scanInput(){
         String  a = myObj.next();
         System.out.println(a);
             if (a.equals("a")) {
@@ -47,10 +47,10 @@ public class Tui implements IObserver {
             }else {
                 printGame();
             }
-    }
+    }*/
 
-    private void printGame() {
+    /*private void printGame() {
         System.out.println(this.controller.getGameSting());
         System.out.println(this.controller.getStatusMessage());
-    }
+    }*/
 }

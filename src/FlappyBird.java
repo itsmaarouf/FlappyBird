@@ -13,7 +13,6 @@ public class FlappyBird {
         controller.addObserver(gui);
         controller.addObserver(tui);
 
-        //tui.run();
-        gui.run();
+        controller.run();
     }
 }
