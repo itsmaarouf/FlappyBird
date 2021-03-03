@@ -31,10 +31,10 @@ public class Tui implements IObserver {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            gameOver = this.controller.gameOverTest();
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
             this.controller.gameScore();
+            gameOver = this.controller.gameOver();
         }
         this.controller.gameOverMessage();
     }

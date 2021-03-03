@@ -54,13 +54,16 @@ public class Controller extends Observable{
         return -1;
     }
 
-    public boolean gameOverTest() {
+    public boolean gameOver() {
         for (int i = 0; i < this.game.getTubes().length; i++) {
             if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()
             && this.game.getBird().getPositionY()  == this.game.getTubes()[i].getPositionY())
             {
                 return true;
             }
+            System.out.println(this.game.getBird().getPositionX() + " X " +this.game.getTubes()[i].getPositionX());
+            System.out.println(this.game.getBird().getPositionY()  + " y " +this.game.getTubes()[i].getPositionY());
+
         }
         return false;
     }
@@ -70,7 +73,7 @@ public class Controller extends Observable{
     }
 
     int Score = 0;
-    public void gameScore() {
+    public int gameScore() {
         for (int i = 0; i < this.game.getTubes().length; i++) {
             if (this.game.getBird().getPositionX() == this.game.getTubes()[i].getPositionX()+this.game.getTubes()[i].getWidth())
             {
@@ -78,6 +81,7 @@ public class Controller extends Observable{
                 this.statusMessage = Messages.GameScore(Score);
             }
         }
+        return Score;
     }
 }
 

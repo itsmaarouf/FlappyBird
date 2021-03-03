@@ -2,9 +2,9 @@ package views;
 
 import controllers.Controller;
 import util.observer.IObserver;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.Style;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +21,6 @@ public class Gui extends JFrame implements IObserver, ActionListener {
     JPanel TopPanel;
     JPanel BottomPanel;
     JButton FlyButten;
-    Image myBird;
-    JLabel score;
 
     public Gui(Controller controller) {
         this.controller = controller;
@@ -33,7 +31,6 @@ public class Gui extends JFrame implements IObserver, ActionListener {
         this.SPACE = new JLabel[height][width];
 
         Container mainContainer = this.getContentPane();
-
 
         TopPanel = new JPanel();
         TopPanel.setBorder(new LineBorder(Color.BLACK, 3));
@@ -50,8 +47,15 @@ public class Gui extends JFrame implements IObserver, ActionListener {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
+
                 int tubeIndex = controller.getTubeIndex(j,i);
-                if (tubeIndex >-1) {
+                /*if (j == 1 && i == 1) {
+
+                    score[i][j] =new JLabel("0");
+                    score[i][j].setPreferredSize(new Dimension(20, 20));
+                    gridPanel.add(SPACE[i][j]);
+
+                }else*/ if (tubeIndex >-1) {
 
                     SPACE[i][j] = new JLabel();
                     SPACE[i][j].setPreferredSize(new Dimension(20, 20));
@@ -62,7 +66,7 @@ public class Gui extends JFrame implements IObserver, ActionListener {
                 }else if (i == this.controller.getGame().getBird().getPositionY()
                         && j == this.controller.getGame().getBird().getPositionX() ) {
 
-                    SPACE[i][j] =  new JLabel("O0");
+                    SPACE[i][j] =  new JLabel("(O.0)");
                     SPACE[i][j].setPreferredSize(new Dimension(20, 20));
                     gridPanel.add(SPACE[i][j]);
 
@@ -77,9 +81,6 @@ public class Gui extends JFrame implements IObserver, ActionListener {
                 }
             }
         }
-
-
-
 
         FlyButten = new JButton("Click to Fly");
         BottomPanel.add(FlyButten);
@@ -104,8 +105,6 @@ public class Gui extends JFrame implements IObserver, ActionListener {
     public void run(){
 
         while(!gameOver) {
-
-            System.out.println(1);
 
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
@@ -138,10 +137,11 @@ public class Gui extends JFrame implements IObserver, ActionListener {
                 e.printStackTrace();
             }
 
-            gameOver = this.controller.gameOverTest();
             this.controller.changeBirdPosition();
             this.controller.changeTubesPositions();
             this.controller.gameScore();
+            gameOver = this.controller.gameOver();
+
         }
     }
 
